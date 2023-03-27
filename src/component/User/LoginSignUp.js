@@ -1,11 +1,16 @@
 import React, { Fragment, useRef, useState, useEffect } from "react";
 import "./LoginSignUp.css";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import FaceIcon from "@mui/icons-material/Face";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, login, register,getAllUsers } from "../../actions/userAction";
+import {
+  clearErrors,
+  login,
+  register,
+  getAllUsers,
+} from "../../actions/userAction";
 import { useAlert } from "react-alert";
 
 const LoginSignUp = ({ location }) => {
@@ -50,18 +55,11 @@ const LoginSignUp = ({ location }) => {
   };
 
   const registerDataChange = (e) => {
-    if (e.target.name === "avatar") {
-      const reader = new FileReader();
-
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
-      setUser({ ...user, [e.target.name]: e.target.value });
-    }
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   // const redirect = location.search ? location.search.split("=")[1] : "/account";
   const redirect = "/";
-
 
   useEffect(() => {
     if (error) {
@@ -110,7 +108,6 @@ const LoginSignUp = ({ location }) => {
                 <div className="loginEmail">
                   <MailOutlineIcon />
                   <input
-                    
                     placeholder="Email"
                     required
                     value={loginEmail}

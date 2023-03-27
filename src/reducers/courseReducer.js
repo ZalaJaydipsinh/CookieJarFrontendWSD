@@ -46,8 +46,8 @@ export const coursesReducer = (state = { courses: [] }, action) => {
     case ALL_COURSE_SUCCESS:
       return {
         loading: false,
-        courseCount: action.payload.courseCount,
-        courses: action.payload.courses,
+        // courseCount: action.payload.courseCount,
+        courses: action.payload,
       };
     case ALL_COURSE_FAIL:
       return {

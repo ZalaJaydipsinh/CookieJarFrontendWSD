@@ -37,12 +37,12 @@ import {
 } from "../constants/courseConstants";
 
 //get data of all courses
-export const getCourse = (keyword = "") => async (dispatch) => {
+export const getCourse = (id) => async (dispatch) => {
   try {
     dispatch({
       type: ALL_COURSE_REQUEST,
     });
-    const { data } = await axios.get(`/api/v1/courses?keyword=${keyword}`);
+    const { data } = await axios.get(`https://localhost:7264/api/Cookies/User/${id}`);
     dispatch({
       type: ALL_COURSE_SUCCESS,
       payload: data,

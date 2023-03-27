@@ -7,8 +7,8 @@ import CourseCard from "../Course/courseCard";
 import { alertClasses } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 const Home = () => {
   const history = useNavigate();
@@ -20,7 +20,7 @@ const Home = () => {
   const { loading, courses, courseCount, error } = useSelector(
     (state) => state.courses
   );
-  const { loading: userLoading, isAuthenticated } = useSelector(
+  const { loading: userLoading, isAuthenticated,user } = useSelector(
     (state) => state.user
   );
 
@@ -34,31 +34,35 @@ const Home = () => {
     }
     // console.log("keyword page....", value.keyword);
 
-    dispatch(getCourse());
-  }, [dispatch, userLoading, isAuthenticated]);
+    dispatch(getCourse(user.id));
+  }, [dispatch, userLoading, isAuthenticated,user]);
 
   const searchHandle = () => {
-    dispatch(getCourse(keyword));
+    
+    dispatch(getCourse(user.id));
   };
 
   return (
     <>
-    <div className="searchDiv">
-      <TextField
+      <div className="searchDiv">
+        <TextField
           size="small"
           value={keyword}
           onInput={(e) => setKeyword(e.target.value)}
           variant="filled"
         />
-      <Button className="searchBtn" variant="outlined" color="success" sx={{marginLeft:"1rem"}} onClick={searchHandle} >Search</Button>
+        <Button
+          className="searchBtn"
+          variant="outlined"
+          color="success"
+          sx={{ marginLeft: "1rem" }}
+          onClick={searchHandle}
+        >
+          Search
+        </Button>
       </div>
       <MetaData title={"Course Tracker"} />
-      {loading ? (
-        <h1>waiting... ... ...</h1>
-      ) : (
-        courses &&
-        courses.map((course) => <CourseCard key={course._id} course={course} />)
-      )}
+      {loading ? <h1>waiting... ... ...</h1> : <h1>Done... ... ...</h1>}
     </>
   );
 };
