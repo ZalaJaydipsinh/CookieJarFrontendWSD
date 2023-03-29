@@ -39,28 +39,6 @@ const CourseDetails = () => {
     loading: UpdateLoading,
   } = useSelector((state) => state.track);
 
-  const handleChangeBookmarked = (checked, tid) => {
-    // console.log(checked, tid);
-    const myForm = new FormData();
-
-    myForm.set("bookmark", checked ? "1" : "");
-    myForm.set("updating", "bookmark");
-    myForm.set("courseId", id);
-    myForm.set("trackId", tid);
-
-    dispatch(updateTrack(myForm));
-  };
-
-  const handleChangeCompleted = (completed, tid) => {
-    const myForm = new FormData();
-
-    myForm.set("done", completed ? "1" : "");
-    myForm.set("updating", "done");
-    myForm.set("courseId", id);
-    myForm.set("trackId", tid);
-
-    dispatch(updateTrack(myForm));
-  };
 
   useEffect(() => {
     if (error) {
@@ -100,26 +78,6 @@ const CourseDetails = () => {
       flex: 1,
     },
     {
-      field: "bookmark",
-      headerName: "Bookmark",
-      width: 150,
-      renderCell: (params) => {
-        return (
-          <>
-            <Checkbox
-              checked={params.row.bookmark}
-              onChange={() =>
-                handleChangeBookmarked(!params.row.bookmark, params.row.id)
-              }
-              icon={<BookmarkBorderIcon />}
-              checkedIcon={<BookmarkIcon />}
-            />
-          </>
-        );
-      },
-      flex: 0.2,
-    },
-    {
       field: "edit",
       headerName: "Edit",
       width: 110,
@@ -136,40 +94,7 @@ const CourseDetails = () => {
         );
       },
       flex: 0.2,
-    },
-    {
-      field: "completed",
-      headerName: "Completed",
-      width: 160,
-      renderCell: (params) => {
-        let chipData = `${
-          params.row.hours < 10 ? `0${params.row.hours}` : params.row.hours
-        }:${
-          params.row.minutes < 10
-            ? `0${params.row.minutes}`
-            : params.row.minutes
-        }`;
-
-        return (
-          <>
-            <Checkbox
-              checked={params.row.completed}
-              onChange={() =>
-                handleChangeCompleted(!params.row.completed, params.row.id)
-              }
-            />
-            <Chip
-              className="timeChip"
-              size="small"
-              label={chipData}
-              color="primary"
-              variant="outlined"
-            />
-          </>
-        );
-      },
-      flex: 0.3,
-    },
+    }
   ];
 
   const rows = [];
@@ -199,45 +124,12 @@ const CourseDetails = () => {
           <div className="courseDetailDivCD">
             <div className="progressDivCD">
               <div className="trackProgress">
-                <Progress
-                  progress={(course.doneTracks * 100) / course.totalTracks}
-                />
-                <hr />
                 <p className="progressInfo">
                   Track
-                  <br />
-                  {course.doneTracks} / {course.totalTracks}
                 </p>
               </div>
 
-              <div className="timeProgress">
-                <Progress
-                  progress={
-                    course &&
-                    course.doneDuration &&
-                    ((course.doneDuration.minutes +
-                      course.doneDuration.hours * 60) *
-                      100) /
-                      (course.totalDuration.minutes +
-                        course.totalDuration.hours * 60)
-                  }
-                />
-                <hr />
-                <p className="progressInfo">
-                  Time
-                  <br />
-                  {course &&
-                    course.doneDuration &&
-                    course.doneDuration.hours} :{" "}
-                  {course && course.doneDuration && course.doneDuration.minutes}{" "}
-                  /{" "}
-                  {course && course.totalDuration && course.totalDuration.hours}{" "}
-                  :{" "}
-                  {course &&
-                    course.totalDuration &&
-                    course.totalDuration.minutes}
-                </p>
-              </div>
+              
             </div>
             <div className="courseInfoCD">
               <div

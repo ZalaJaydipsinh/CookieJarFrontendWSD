@@ -259,7 +259,7 @@ export const trackReducer = (state = {}, action) => {
   }
 };
 
-export const trackDetailsReducer = (state = { track: {} }, action) => {
+export const trackDetailsReducer = (state = { track: [] }, action) => {
   switch (action.type) {
     case TRACK_DETAILS_REQUEST:
       return {

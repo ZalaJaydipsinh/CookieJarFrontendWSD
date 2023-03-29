@@ -210,15 +210,15 @@ export const deleteTrack = (id,tid) => async (dispatch) => {
 };
 
 //get particular track of the course details
-export const getTrackDetails = (id,tid) => async (dispatch) => {
+export const getTrackDetails = (id) => async (dispatch) => {
   try {
     dispatch({
       type: TRACK_DETAILS_REQUEST,
     });
-    const { data } = await axios.get(`/api/v1/track/${id}/${tid}`);
+    const { data } = await axios.get(`https://localhost:7264/api/Tags/user/${id}`);
     dispatch({
       type: TRACK_DETAILS_SUCCESS,
-      payload: data.trackDetails,
+      payload: data,
     });
   } catch (error) {
     dispatch({
