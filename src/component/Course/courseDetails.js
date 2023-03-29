@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
@@ -6,6 +6,8 @@ import {
   clearErrors,
   getCourseDetails,
   updateTrack,
+  getTrackDetails,
+  deleteTrack,
 } from "../../actions/courseAction";
 import Progress from "./Progress";
 import { useParams } from "react-router-dom";
@@ -24,6 +26,18 @@ import {
 } from "../../constants/courseConstants";
 import Chip from "@mui/material/Chip";
 import "./courseDetails.css";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Button } from "@mui/material";
+
+import DataSaverOnIcon from "@mui/icons-material/DataSaverOn";
 
 const CourseDetails = () => {
   const history = useNavigate();
@@ -33,19 +47,41 @@ const CourseDetails = () => {
   const { loading, course, error } = useSelector(
     (state) => state.courseDetails
   );
-  const {
-    error: UpdateError,
-    isUpdated,
-    loading: UpdateLoading,
-  } = useSelector((state) => state.track);
+  const { error: UpdateError, isUpdated, loading: UpdateLoading } = useSelector(
+    (state) => state.track
+  );
+  const refresh = () => window.location.reload(true);
 
+  const createCookieTagSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const myForm = new FormData();
+
+    myForm.set("tagId", tag);
+    myForm.set("cookieId", id);
+
+    dispatch(updateTrack(myForm));
+    refresh();
+  };
+
+  const {
+    loading: TrackDetailsLoading,
+    track,
+    error: TrackDetailsError,
+  } = useSelector((state) => state.trackDetails);
+
+  const [name, setName] = useState("");
+  const [tag, setTag] = React.useState("");
+
+  const handleChange = (event) => {
+    setTag(event.target.value);
+  };
 
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-    dispatch({ type: TRACK_DETAILS_RESET });
 
     if (isUpdated) {
       // alert.success("Track updated Successfully");
@@ -53,130 +89,126 @@ const CourseDetails = () => {
       dispatch({ type: TRACK_DETAILS_RESET });
       // history(`/course/${courseId}`);
     }
-
+    console.log("course id: ", id);
     dispatch(getCourseDetails(id));
-  }, [dispatch, isUpdated]);
 
-  function goToUpdateTrack(tid) {
-    console.log("redirecting to update");
-    history("/track/update", {
-      state: { courseId: id, trackId: tid },
-    });
-  }
-
-  const columns = [
-    {
-      field: "name",
-      headerName: "Name",
-      width: 200,
-      flex: 0.7,
-    },
-    {
-      field: "notes",
-      headerName: "Notes",
-      width: 300,
-      flex: 1,
-    },
-    {
-      field: "edit",
-      headerName: "Edit",
-      width: 110,
-      renderCell: (params) => {
-        return (
-          <>
-            <IconButton
-              color="primary"
-              onClick={() => goToUpdateTrack(params.row.id)}
-            >
-              <EditIcon />
-            </IconButton>
-          </>
-        );
-      },
-      flex: 0.2,
+    if ((track && Object.keys(track).length === 0) || !track) {
+      console.log("fetching tags....");
+      dispatch(getTrackDetails(5));
+    } else {
+      console.log("tags are already fetched...");
     }
-  ];
-
-  const rows = [];
-
-  course &&
-    course.tracks &&
-    course.tracks.forEach((item) => {
-      rows.push({
-        name: item.name,
-        notes: item.notes,
-        bookmark: item.bookmark,
-        completed: item.done,
-        hours: item.totalDuration.hours,
-        minutes: item.totalDuration.minutes,
-        id: item._id,
-      });
-    });
+  }, [dispatch, isUpdated, error, history, track, alert]);
 
   return (
     <React.Fragment>
       {loading ? (
         <h1>waiting... ... ...</h1>
       ) : (
-        <React.Fragment>
-          <MetaData title={"Course Details"} />
-
-          <div className="courseDetailDivCD">
-            <div className="progressDivCD">
-              <div className="trackProgress">
-                <p className="progressInfo">
-                  Track
-                </p>
-              </div>
-
-              
-            </div>
-            <div className="courseInfoCD">
-              <div
-                style={{
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  width: "8rem",
-                  height: "2rem",
-                }}
-              >
-                <Typography component="div" variant="h5" nowrap>
-                  {course && course.name}
-                </Typography>
-              </div>
-              <div
-                style={{
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  width: "60rem",
-                  height: "7rem",
-                }}
-              >
-                <Typography
-                  variant="subtitle2"
-                  color="text.secondary"
-                  component="div"
-                >
-                  {course && course.description}
-                </Typography>
-              </div>
-            </div>
-          </div>
-
-          <br />
-          <br />
-          <div className="tableDivCD">
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              pageSize={15}
-              disableSelectionOnClick
-              autoHeight
-              sx={{ width: 1 }}
-            />
-          </div>
-          <CourseSpeedDial courseId={id} courseName={course.name} />
-        </React.Fragment>
+        <div className="outer">
+          <Card
+            className="card  cardLink"
+            sx={{
+              padding: "5px",
+              backgroundColor: "rgb(234, 242, 248)",
+              borderRadius: "1%",
+              marginTop: "2vh",
+              transition: "1s",
+            }}
+          >
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <CardContent sx={{ flex: "1 0 auto" }}>
+                <div className="courseInfo">
+                  <div
+                    style={{
+                      textOverflow: "ellipsis",
+                      height: "2rem",
+                    }}
+                  >
+                    <Typography component="div" variant="h5" nowrap>
+                      {course.title}
+                    </Typography>
+                  </div>
+                  <div
+                    style={{
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    <Typography
+                      variant="subtitle2"
+                      color="text.secondary"
+                      component="div"
+                    >
+                      {course.message}
+                    </Typography>
+                  </div>
+                  <div
+                    style={{
+                      textOverflow: "ellipsis",
+                      marginTop: "2vh",
+                    }}
+                  >
+                    <Stack direction="row" spacing={1}>
+                      {course &&
+                        course.tags &&
+                        course.tags.map((tag) => {
+                          return (
+                            <Chip
+                              key={tag.id}
+                              label={tag.name}
+                              size="small"
+                              variant="outlined"
+                            />
+                          );
+                        })}
+                    </Stack>
+                  </div>
+                  <br />
+                  <div>
+                    <form
+                      onSubmit={createCookieTagSubmitHandler}
+                      encType="multipart/form-data"
+                    >
+                      <FormControl sx={{ m: 1, minWidth: 80 }}>
+                        <InputLabel id="demo-simple-select-autowidth-label">
+                          Tag
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-autowidth-label"
+                          id="demo-simple-select-autowidth"
+                          value={tag}
+                          onChange={handleChange}
+                          autoWidth
+                          label="All Tags"
+                        >
+                          <MenuItem value="">
+                            <em>Tags</em>
+                          </MenuItem>
+                          {track &&
+                            track.map((tag) => (
+                              <MenuItem value={tag.id}>{tag.name}</MenuItem>
+                            ))}
+                        </Select>
+                        <br />
+                        {tag ? (
+                          <Button
+                            type="submit"
+                            variant="outlined"
+                            endIcon={<DataSaverOnIcon />}
+                          >
+                            Add
+                          </Button>
+                        ) : (
+                          ""
+                        )}
+                      </FormControl>
+                    </form>
+                  </div>
+                </div>
+              </CardContent>
+            </Box>
+          </Card>
+        </div>
       )}
     </React.Fragment>
   );

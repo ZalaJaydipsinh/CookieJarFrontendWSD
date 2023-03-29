@@ -15,12 +15,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   clearErrors,
   createTrack,
+  deleteTrack,
   getTrackDetails,
 } from "../../actions/courseAction.js";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const NewTrack = () => {
   const history = useNavigate();
@@ -34,6 +36,8 @@ const NewTrack = () => {
   //   location ? location.state.user.id : ""
   // );
 
+  const refresh = () => window.location.reload(true);
+
   const {
     loading: TrackDetailsLoading,
     track,
@@ -41,7 +45,7 @@ const NewTrack = () => {
   } = useSelector((state) => state.trackDetails);
 
   const [name, setName] = useState("");
-  const [tag, setTag] = React.useState('');
+  const [tag, setTag] = React.useState("");
 
   const handleChange = (event) => {
     setTag(event.target.value);
@@ -78,6 +82,7 @@ const NewTrack = () => {
     myForm.set("userId", userId);
 
     dispatch(createTrack(myForm));
+    refresh();
   };
 
   return (
@@ -99,7 +104,7 @@ const NewTrack = () => {
             <Typography gutterBottom variant="h4">
               User Name
             </Typography>
-            
+
             <Typography gutterBottom variant="h6">
               Enter new Tag Name
             </Typography>
@@ -147,10 +152,22 @@ const NewTrack = () => {
                   <MenuItem value="">
                     <em>Tags</em>
                   </MenuItem>
-                  {
-                    track && track.map((tag)=> <MenuItem value={tag.id}>{tag.name}</MenuItem> )
-                  }
+                  {track &&
+                    track.map((tag) => (
+                      <MenuItem value={tag.id}>{tag.name}</MenuItem>
+                    ))}
                 </Select>
+                <br />
+                <Button
+                  variant="outlined"
+                  endIcon={<DeleteIcon />}
+                  onClick={() => {
+                    dispatch(deleteTrack(tag));
+                    refresh();
+                  }}
+                >
+                  Delete
+                </Button>
               </FormControl>
             </div>
           </CardContent>

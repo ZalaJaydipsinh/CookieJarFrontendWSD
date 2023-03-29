@@ -61,10 +61,10 @@ export const getCourseDetails = (id) => async (dispatch) => {
     dispatch({
       type: COURSE_DETAILS_REQUEST,
     });
-    const { data } = await axios.get(`/api/v1/course/${id}`);
+    const { data } = await axios.get(`https://localhost:7264/api/Cookies/${id}`);
     dispatch({
       type: COURSE_DETAILS_SUCCESS,
-      payload: data.courseDetails,
+      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -179,7 +179,7 @@ export const updateTrack = (track) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post("/api/v1/track/new", track, config);
+    const { data } = await axios.post("https://localhost:7264/api/Tags/CookieTag", track, config);
 
     dispatch({ type: UPDATE_TRACK_SUCCESS, payload: data });
   } catch (error) {
@@ -191,11 +191,11 @@ export const updateTrack = (track) => async (dispatch) => {
 };
 
 // Delete track
-export const deleteTrack = (id,tid) => async (dispatch) => {
+export const deleteTrack = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_TRACK_REQUEST });
 
-    const { data } = await axios.delete(`/api/v1/track/${id}/${tid}`);
+    const { data } = await axios.delete(`https://localhost:7264/api/Tags/${id}`);
 
     dispatch({
       type: DELETE_TRACK_SUCCESS,

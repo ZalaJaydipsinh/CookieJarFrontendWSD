@@ -1,17 +1,17 @@
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { Link } from "react-router-dom";
 import Progress from "./Progress";
 import "./courseCard.css";
 import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
 
 export default function CourseCard({ course }) {
   return (

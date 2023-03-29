@@ -39,7 +39,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Appbar />}>
           <Route index element={<Home />} />
-          <Route path="course/:id" element={<CourseDetails />} />
+          <Route path="cookie/:id" element={<CourseDetails />} />
           <Route path="Login/" element={<LoginSignUp />} />
           <Route
             path="account/"

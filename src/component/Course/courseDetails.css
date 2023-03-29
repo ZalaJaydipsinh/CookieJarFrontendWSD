@@ -1,19 +1,59 @@
 .courseInfoCD {
-    position: relative;
-    overflow: hidden;
-    margin-left: 5vh;
+  position: relative;
+  overflow: hidden;
+  margin-left: 5vh;
 }
 
 .progressDivCD {
-    float: left;
-    display: flex;
-    margin-right: 5vw;
+  float: left;
+  display: flex;
+  margin-right: 5vw;
 }
 
 .courseDetailDivCD {
-    margin: 2vh 10vw;
+  margin: 2vh 10vw;
 }
 
-.tableDivCD{
-    padding: 0;
+.tableDivCD {
+  padding: 0;
+}
+
+/* course card css start */
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  border-radius: 3%;
+}
+
+.progressDiv {
+  float: right;
+  position: relative;
+  min-width: 70;
+  top: 0%;
+  right: 0%;
+  margin-left: 3vh;
+}
+
+.courseInfo {
+  float: left;
+  position: relative;
+  left: 0%;
+  max-width: 90;
+  overflow: hidden;
+}
+
+.verticalHr {
+  width: 5px;
+  height: 100%;
+  background-color: black;
+}
+
+.css-1qaznj3-MuiCardContent-root:last-child {
+  width: 80vw;
+  height: 70vh;
+}
+
+.outer{
+      display: flex;
+    justify-content: center;
 }
