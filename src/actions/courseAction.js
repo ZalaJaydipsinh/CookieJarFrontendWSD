@@ -84,7 +84,7 @@ export const createCourse = (course) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post("/api/v1/course/new", course, config);
+    const { data } = await axios.post("https://localhost:7264/api/Cookies", course, config);
 
     dispatch({ type: CREATE_COURSE_SUCCESS, payload: data });
   } catch (error) {
