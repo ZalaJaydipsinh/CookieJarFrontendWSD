@@ -20,7 +20,7 @@ const Home = () => {
   const { loading, courses, courseCount, error } = useSelector(
     (state) => state.courses
   );
-  const { loading: userLoading, isAuthenticated,user } = useSelector(
+  const { loading: userLoading, isAuthenticated, user } = useSelector(
     (state) => state.user
   );
 
@@ -33,12 +33,12 @@ const Home = () => {
       history("/login");
     }
     // console.log("keyword page....", value.keyword);
-
-    dispatch(getCourse(user.id));
-  }, [dispatch, userLoading, isAuthenticated,user]);
+    if (user) {
+      dispatch(getCourse(user.id));
+    }
+  }, [dispatch, userLoading, isAuthenticated, user]);
 
   const searchHandle = () => {
-    
     dispatch(getCourse(user.id));
   };
 

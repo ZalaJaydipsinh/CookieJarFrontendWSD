@@ -59,7 +59,7 @@ function App() {
             path="course/new"
             element={isAuthenticated ? <NewCourse /> : <LoginSignUp />}
           />
-          <Route path="track/new" element={<NewTrack />} />
+          <Route path="tag/new" element={<NewTrack />} />
           <Route path="track/update" element={<UpdateTrack />} />
           <Route path="course/update/:id" element={<UpdateCourse />} />
         </Route>

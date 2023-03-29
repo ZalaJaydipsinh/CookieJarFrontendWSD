@@ -158,7 +158,7 @@ export const createTrack = (track) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post("/api/v1/track/new", track, config);
+    const { data } = await axios.post("https://localhost:7264/api/Tags", track, config);
 
     dispatch({ type: CREATE_TRACK_SUCCESS, payload: data });
   } catch (error) {
