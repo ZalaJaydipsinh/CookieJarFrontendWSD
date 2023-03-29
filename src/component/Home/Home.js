@@ -20,49 +20,37 @@ const Home = () => {
   const { loading, courses, courseCount, error } = useSelector(
     (state) => state.courses
   );
-  const { loading: userLoading, isAuthenticated, user } = useSelector(
-    (state) => state.user
-  );
+  // const { loading: userLoading, isAuthenticated, user } = useSelector(
+  //   (state) => state.user
+  // );
+  const [userId,setUserId] = useState(5);
 
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-    if (!userLoading && !isAuthenticated) {
-      history("/login");
-    }
+    // if (!userLoading && !isAuthenticated) {
+    //   history("/login");
+    // }
     // console.log("keyword page....", value.keyword);
-    if (user) {
-      dispatch(getCourse(user.id));
-    }
-  }, [dispatch, userLoading, isAuthenticated, user]);
+    // if (user) {
+    //   dispatch(getCourse(userId));
+    // }
+    dispatch(getCourse(userId));
 
-  const searchHandle = () => {
-    dispatch(getCourse(user.id));
-  };
+  }, [dispatch]);
 
   return (
     <>
-      <div className="searchDiv">
-        <TextField
-          size="small"
-          value={keyword}
-          onInput={(e) => setKeyword(e.target.value)}
-          variant="filled"
-        />
-        <Button
-          className="searchBtn"
-          variant="outlined"
-          color="success"
-          sx={{ marginLeft: "1rem" }}
-          onClick={searchHandle}
-        >
-          Search
-        </Button>
-      </div>
+
       <MetaData title={"Course Tracker"} />
-      {loading ? <h1>waiting... ... ...</h1> : <h1>Done... ... ...</h1>}
+      {loading ? (
+        <h1>waiting... ... ...</h1>
+      ) : (
+        courses &&
+        courses.map((course) => <CourseCard key={course.id} course={course} />)
+      )}
     </>
   );
 };

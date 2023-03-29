@@ -48,3 +48,10 @@
   float: left;
   margin: 1rem;
 }
+
+.editBtn{
+  display: inline;
+  position: relative;
+  right: -17px;
+  top: -20px;
+}
