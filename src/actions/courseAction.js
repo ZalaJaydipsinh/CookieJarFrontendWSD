@@ -119,7 +119,9 @@ export const deleteCourse = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_COURSE_REQUEST });
 
-    const { data } = await axios.delete(`https://localhost:7264/api/Cookies/${id}`);
+    const { data } = await axios.delete(
+      `https://localhost:7264/api/Cookies/${id}`
+    );
 
     dispatch({
       type: DELETE_COURSE_SUCCESS,
@@ -142,15 +144,17 @@ export const updateCourse = (id, productData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
+    console.log("cookie to be updated: ", productData);
+
     const { data } = await axios.put(
-      `/api/v1/course/${id}`,
+      `https://localhost:7264/api/Cookies/${id}`,
       productData,
       config
     );
 
     dispatch({
       type: UPDATE_COURSE_SUCCESS,
-      payload: data.sucess,
+      payload: data,
     });
   } catch (error) {
     dispatch({

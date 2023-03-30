@@ -21,13 +21,12 @@ const NewCourse = () => {
   const { loading, error, success } = useSelector((state) => state.newCourse);
 
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   var uid = localStorage.getItem("uid");
   if(!uid){
     console.log("user is not loged in.");
-
   }
   const [userId,setUserId] = useState(uid);
-  const [description, setDescription] = useState("");
 
   useEffect(() => {
     if (error) {
