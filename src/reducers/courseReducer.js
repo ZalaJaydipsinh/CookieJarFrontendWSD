@@ -33,6 +33,10 @@ import {
   TRACK_DETAILS_SUCCESS,
   TRACK_DETAILS_RESET,
   TRACK_DETAILS_FAIL,
+  DELETE_COOKIE_TAG_REQUEST,
+  DELETE_COOKIE_TAG_SUCCESS,
+  DELETE_COOKIE_TAG_RESET,
+  DELETE_COOKIE_TAG_FAIL,
   CLEAR_ERRORS,
 } from "../constants/courseConstants";
 
@@ -214,12 +218,14 @@ export const newTrackReducer = (state = { track: {} }, action) => {
 export const trackReducer = (state = {}, action) => {
   switch (action.type) {
     case DELETE_TRACK_REQUEST:
+    case DELETE_COOKIE_TAG_REQUEST:
     case UPDATE_TRACK_REQUEST:
       return {
         ...state,
         loading: true,
       };
     case DELETE_TRACK_SUCCESS:
+    case DELETE_COOKIE_TAG_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -233,6 +239,7 @@ export const trackReducer = (state = {}, action) => {
         isUpdated: action.payload,
       };
     case DELETE_TRACK_FAIL:
+    case DELETE_COOKIE_TAG_FAIL:
     case UPDATE_TRACK_FAIL:
       return {
         ...state,
@@ -240,6 +247,7 @@ export const trackReducer = (state = {}, action) => {
         error: action.payload,
       };
     case DELETE_TRACK_RESET:
+    case DELETE_COOKIE_TAG_RESET:
       return {
         ...state,
         isDeleted: false,

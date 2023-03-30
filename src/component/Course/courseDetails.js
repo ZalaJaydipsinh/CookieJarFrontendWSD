@@ -8,6 +8,7 @@ import {
   updateTrack,
   getTrackDetails,
   deleteTrack,
+  deleteCookieTag,
 } from "../../actions/courseAction";
 import Progress from "./Progress";
 import { useParams } from "react-router-dom";
@@ -38,6 +39,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "@mui/material";
 
 import DataSaverOnIcon from "@mui/icons-material/DataSaverOn";
+import { idID } from "@mui/material/locale";
 
 const CourseDetails = () => {
   const history = useNavigate();
@@ -93,12 +95,25 @@ const CourseDetails = () => {
     dispatch(getCourseDetails(id));
 
     if ((track && Object.keys(track).length === 0) || !track) {
-      console.log("fetching tags....");
+      // console.log("fetching tags....");
       dispatch(getTrackDetails(5));
     } else {
-      console.log("tags are already fetched...");
+      // console.log("tags are already fetched...");
     }
   }, [dispatch, isUpdated, error, history, track, alert]);
+
+  const handleDelete = (tagId) => {
+    console.info("You clicked the delete icon: ", tagId);
+
+    var deleteObj = {
+      tagId: tagId,
+      cookieId: parseInt(id),
+    };
+
+    dispatch(deleteCookieTag(deleteObj));
+
+    refresh();
+  };
 
   return (
     <React.Fragment>
@@ -158,6 +173,7 @@ const CourseDetails = () => {
                               label={tag.name}
                               size="small"
                               variant="outlined"
+                              onDelete={() => handleDelete(tag.id)}
                             />
                           );
                         })}
