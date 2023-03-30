@@ -23,7 +23,11 @@ const Home = () => {
   // const { loading: userLoading, isAuthenticated, user } = useSelector(
   //   (state) => state.user
   // );
-  const [userId,setUserId] = useState(5);
+  var uid = localStorage.getItem("uid");
+  if (!uid) {
+    console.log("user is not loged in.");
+  }
+  const [userId, setUserId] = useState(uid);
 
   useEffect(() => {
     if (error) {
@@ -37,13 +41,16 @@ const Home = () => {
     // if (user) {
     //   dispatch(getCourse(userId));
     // }
-    dispatch(getCourse(userId));
 
+    var uid = localStorage.getItem("uid");
+    if (!uid) {
+      history("/login");
+    }
+    dispatch(getCourse(userId));
   }, [dispatch]);
 
   return (
     <>
-
       <MetaData title={"Course Tracker"} />
       {loading ? (
         <h1>waiting... ... ...</h1>

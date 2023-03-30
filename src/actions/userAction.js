@@ -60,7 +60,11 @@ export const register = (userData) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.post(`https://localhost:7264/api/Users`, userData, config);
+    const { data } = await axios.post(
+      `https://localhost:7264/api/Users`,
+      userData,
+      config
+    );
 
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
   } catch (error) {
@@ -76,9 +80,18 @@ export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/me`);
+    // const { data } = await axios.get(`/api/v1/me`);
+    var uid = localStorage.getItem("uid");
+    if (uid) {
+      var user = {
+        id: uid,
+        name: localStorage.getItem("uname"),
+      };
+      dispatch({ type: LOAD_USER_SUCCESS, payload: user });
+    }else{
+    dispatch({ type: LOAD_USER_FAIL, payload: "uid not found in localStorage" });
 
-    dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
+    }
   } catch (error) {
     dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
   }
@@ -87,7 +100,9 @@ export const loadUser = () => async (dispatch) => {
 // Logout User
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get(`/api/v1/logout`);
+    // await axios.get(`/api/v1/logout`);
+    localStorage.removeItem("uid");
+    localStorage.removeItem("uname");
 
     dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {

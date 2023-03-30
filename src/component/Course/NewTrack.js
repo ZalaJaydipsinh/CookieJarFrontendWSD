@@ -30,8 +30,12 @@ const NewTrack = () => {
   const location = useLocation();
   const alert = useAlert();
   const { loading, error, success } = useSelector((state) => state.newTrack);
-  // TODO: get the user id automatically.
-  const [userId, setUserId] = useState(5);
+  var uid = localStorage.getItem("uid");
+  if (!uid) {
+    console.log("user is not loged in.");
+    history("/");
+  }
+  const [userId, setUserId] = useState(uid);
   // const [userId, setUserId] = useState(
   //   location ? location.state.user.id : ""
   // );
@@ -67,7 +71,13 @@ const NewTrack = () => {
     }
     if ((track && Object.keys(track).length === 0) || !track) {
       console.log("fetching tags....");
-      dispatch(getTrackDetails(5));
+      var uid = localStorage.getItem("uid");
+      if (uid) {
+        dispatch(getTrackDetails(uid));
+      } else {
+        console.log("user is not loged in.");
+        history("/");
+      }
     } else {
       console.log("tags are already fetched...");
     }

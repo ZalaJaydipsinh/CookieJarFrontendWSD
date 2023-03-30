@@ -44,6 +44,7 @@ import { idID } from "@mui/material/locale";
 const CourseDetails = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
+  //id - cookieId
   let { id } = useParams();
   const alert = useAlert();
   const { loading, course, error } = useSelector(
@@ -96,7 +97,12 @@ const CourseDetails = () => {
 
     if ((track && Object.keys(track).length === 0) || !track) {
       // console.log("fetching tags....");
-      dispatch(getTrackDetails(5));
+      var uid = localStorage.getItem("uid");
+      if (uid) {
+        dispatch(getTrackDetails(uid));
+      }else{
+        console.log("user is not loged in.");
+      }
     } else {
       // console.log("tags are already fetched...");
     }

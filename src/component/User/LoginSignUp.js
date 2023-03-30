@@ -18,7 +18,7 @@ const LoginSignUp = ({ location }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
-  const { error, loading, isAuthenticated } = useSelector(
+  const { error, loading, isAuthenticated, user: logedinUser } = useSelector(
     (state) => state.user
   );
 
@@ -53,6 +53,7 @@ const LoginSignUp = ({ location }) => {
     myForm.set("password", password);
     dispatch(register(myForm));
   };
+  const refresh = () => window.location.reload(true);
 
   const registerDataChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -68,6 +69,9 @@ const LoginSignUp = ({ location }) => {
     }
 
     if (isAuthenticated) {
+      localStorage.setItem("uid", logedinUser.id);
+      localStorage.setItem("uname", logedinUser.name);
+      // console.log("User authenticated: ", logedinUser);
       history(redirect);
     }
   }, [dispatch, error, alert, history, isAuthenticated, redirect]);

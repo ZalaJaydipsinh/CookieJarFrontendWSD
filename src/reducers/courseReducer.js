@@ -107,7 +107,7 @@ export const newCourseReducer = (state = { course: {} }, action) => {
       return {
         loading: false,
         course: action.payload,
-        success: action.payload.sucess,
+        success: true,
       };
 
     case CREATE_COURSE_FAIL:

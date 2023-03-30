@@ -16,11 +16,14 @@ import WhereToVoteRoundedIcon from "@mui/icons-material/WhereToVoteRounded";
 import { Outlet, Link } from "react-router-dom";
 import "./Appbar.css";
 
-const pages = ["Cookie", "New Tag"];
-const pagesRoute = ["/", "tag/new"];
+const pages = ["Cookie", "New Tag","New Cookie"];
+const pagesRoute = ["/", "tag/new","cookie/new"];
 const settings = ["Login", "Profile", "Logout"];
 
 function ResponsiveAppBar() {
+
+  var uid = localStorage.getItem("uid");
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -92,7 +95,7 @@ function ResponsiveAppBar() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page, index) => (
+                {uid && pages.map((page, index) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <Link to={pagesRoute[index]}>
                       <Typography textAlign="center">{page}</Typography>
@@ -120,7 +123,7 @@ function ResponsiveAppBar() {
 
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page, index) => (
+              {uid && pages.map((page, index) => (
                 <Link className="pageRoute" to={pagesRoute[index]}>
                   <Button
                     key={page}

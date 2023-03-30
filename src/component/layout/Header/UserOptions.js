@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from "react";
 import "./header.css";
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
-import Backdrop from '@mui/material/Backdrop';
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import Backdrop from "@mui/material/Backdrop";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { logout } from "../../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const UserOptions = ({ user }) => {
   const [open, setOpen] = useState(false);
@@ -23,7 +24,7 @@ const UserOptions = ({ user }) => {
     { icon: <PersonIcon />, name: "Profile", func: account },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
-
+  const refresh = () => window.location.reload(true);
 
   function account() {
     history("/account");
@@ -31,6 +32,7 @@ const UserOptions = ({ user }) => {
 
   function logoutUser() {
     dispatch(logout());
+    refresh();
     alert.success("Logout Successfully");
   }
 
@@ -45,13 +47,7 @@ const UserOptions = ({ user }) => {
         open={open}
         direction="down"
         className="speedDial"
-        icon={
-          <img
-            className="speedDialIcon"
-            src="/Profile.png"
-            alt="Profile"
-          />
-        }
+        icon={<AccountCircleIcon />}
       >
         {options.map((item) => (
           <SpeedDialAction

@@ -25,6 +25,7 @@ import { useState } from "react";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  var uid;
   useEffect(() => {
     WebFont.load({
       google: {
@@ -32,7 +33,9 @@ function App() {
       },
     });
     store.dispatch(loadUser());
-  }, []);
+    uid = localStorage.getItem("uid");
+    console.log("user id: ",uid);
+  }, [isAuthenticated]);
   return (
     <BrowserRouter>
       {isAuthenticated && <UserOptions user={user} />}
@@ -56,7 +59,7 @@ function App() {
           <Route path="password/forgot" element={<ForgotPassword />} />
           <Route path="password/reset/:token" element={<ResetPassword />} />
           <Route
-            path="course/new"
+            path="cookie/new"
             element={isAuthenticated ? <NewCourse /> : <LoginSignUp />}
           />
           <Route path="tag/new" element={<NewTrack />} />
