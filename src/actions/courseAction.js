@@ -119,11 +119,11 @@ export const deleteCourse = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_COURSE_REQUEST });
 
-    const { data } = await axios.delete(`/api/v1/course/${id}`);
+    const { data } = await axios.delete(`https://localhost:7264/api/Cookies/${id}`);
 
     dispatch({
       type: DELETE_COURSE_SUCCESS,
-      payload: data.sucess,
+      payload: true,
     });
   } catch (error) {
     dispatch({

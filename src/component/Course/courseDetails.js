@@ -9,9 +9,10 @@ import {
   getTrackDetails,
   deleteTrack,
   deleteCookieTag,
+  deleteCourse,
 } from "../../actions/courseAction";
 import Progress from "./Progress";
-import { useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
 import CourseSpeedDial from "./CourseSpeedDial";
 import { Link, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
@@ -24,6 +25,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import {
   UPDATE_TRACK_RESET,
   TRACK_DETAILS_RESET,
+  DELETE_COURSE_RESET,
 } from "../../constants/courseConstants";
 import Chip from "@mui/material/Chip";
 import "./courseDetails.css";
@@ -100,12 +102,13 @@ const CourseDetails = () => {
       var uid = localStorage.getItem("uid");
       if (uid) {
         dispatch(getTrackDetails(uid));
-      }else{
+      } else {
         console.log("user is not loged in.");
       }
     } else {
       // console.log("tags are already fetched...");
     }
+    console.log(course, "Deleting the course");
   }, [dispatch, isUpdated, error, history, track, alert]);
 
   const handleDelete = (tagId) => {
@@ -118,6 +121,14 @@ const CourseDetails = () => {
 
     dispatch(deleteCookieTag(deleteObj));
 
+    refresh();
+  };
+
+  const handleCookieDelete = () => {
+    dispatch(deleteCourse(id));
+    alert.success("Course Deleted Successfully");
+    dispatch({ type: DELETE_COURSE_RESET });
+    history("/");
     refresh();
   };
 
@@ -139,6 +150,13 @@ const CourseDetails = () => {
           >
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <CardContent sx={{ flex: "1 0 auto" }}>
+                <IconButton
+                  color="primary"
+                  aria-label="edit cookie"
+                  onClick={handleCookieDelete}
+                >
+                  <DeleteIcon />
+                </IconButton>
                 <div className="courseInfo">
                   <div
                     style={{

@@ -37,8 +37,8 @@ const NewCourse = () => {
 
     if (success) {
       alert.success("Course Created Successfully");
-      history("/");
       dispatch({ type: CREATE_COURSE_RESET });
+      history("/",{replace: true});
     }
   }, [dispatch, alert, error, history, success]);
 

@@ -17,7 +17,7 @@ const Home = () => {
   // const value = queryString.parse(window.location.search);
   const [keyword, setKeyword] = useState("");
 
-  const { loading, courses, courseCount, error } = useSelector(
+  const { loading, courses, error } = useSelector(
     (state) => state.courses
   );
   // const { loading: userLoading, isAuthenticated, user } = useSelector(
@@ -34,18 +34,12 @@ const Home = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    // if (!userLoading && !isAuthenticated) {
-    //   history("/login");
-    // }
-    // console.log("keyword page....", value.keyword);
-    // if (user) {
-    //   dispatch(getCourse(userId));
-    // }
 
     var uid = localStorage.getItem("uid");
     if (!uid) {
       history("/login");
     }
+    setUserId(uid);
     dispatch(getCourse(userId));
   }, [dispatch]);
 

@@ -75,8 +75,6 @@ export default function CourseCard({ course }) {
                 {course &&
                   course.tags &&
                   course.tags.map((tag) => {
-                    console.log("tag name: ");
-                    console.log(tag.name);
                     return (
                       <Chip
                         key={tag.id}

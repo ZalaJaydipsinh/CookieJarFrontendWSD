@@ -50,7 +50,6 @@ export const coursesReducer = (state = { courses: [] }, action) => {
     case ALL_COURSE_SUCCESS:
       return {
         loading: false,
-        // courseCount: action.payload.courseCount,
         courses: action.payload,
       };
     case ALL_COURSE_FAIL:
@@ -118,7 +117,7 @@ export const newCourseReducer = (state = { course: {} }, action) => {
     case CREATE_COURSE_RESET:
       return {
         ...state,
-        sucess: false,
+        success: false,
       };
     case CLEAR_ERRORS:
       return {
