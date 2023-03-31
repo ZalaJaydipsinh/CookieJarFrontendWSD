@@ -16,8 +16,8 @@ import WhereToVoteRoundedIcon from "@mui/icons-material/WhereToVoteRounded";
 import { Outlet, Link } from "react-router-dom";
 import "./Appbar.css";
 
-const pages = ["Cookie", "New Tag", "New Cookie"];
-const pagesRoute = ["/", "tag/new", "cookie/new"];
+const pages = ["Cookie", "New Tag", "New Cookie","Take A Cookie"];
+const pagesRoute = ["/", "tag/new", "cookie/new","cookie/random"];
 const settings = ["Login", "Profile", "Logout"];
 
 function ResponsiveAppBar() {

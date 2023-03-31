@@ -38,6 +38,9 @@ import {
   DELETE_COOKIE_TAG_RESET,
   DELETE_COOKIE_TAG_FAIL,
   CLEAR_ERRORS,
+  RANDOM_COURSE_DETAILS_REQUEST,
+  RANDOM_COURSE_DETAILS_SUCCESS,
+  RANDOM_COURSE_DETAILS_FAIL,
 } from "../constants/courseConstants";
 
 export const coursesReducer = (state = { courses: [] }, action) => {
@@ -70,16 +73,19 @@ export const coursesReducer = (state = { courses: [] }, action) => {
 export const courseDetailsReducer = (state = { course: {} }, action) => {
   switch (action.type) {
     case COURSE_DETAILS_REQUEST:
+    case RANDOM_COURSE_DETAILS_REQUEST:
       return {
         loading: true,
         ...state,
       };
     case COURSE_DETAILS_SUCCESS:
+    case RANDOM_COURSE_DETAILS_SUCCESS:
       return {
         loading: false,
         course: action.payload,
       };
     case COURSE_DETAILS_FAIL:
+    case RANDOM_COURSE_DETAILS_FAIL:
       return {
         loading: false,
         error: action.payload,

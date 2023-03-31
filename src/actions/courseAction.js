@@ -38,6 +38,9 @@ import {
   DELETE_COOKIE_TAG_SUCCESS,
   DELETE_COOKIE_TAG_RESET,
   DELETE_COOKIE_TAG_FAIL,
+  RANDOM_COURSE_DETAILS_REQUEST,
+RANDOM_COURSE_DETAILS_SUCCESS,
+RANDOM_COURSE_DETAILS_FAIL,
 } from "../constants/courseConstants";
 
 //get data of all courses
@@ -77,6 +80,27 @@ export const getCourseDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: COURSE_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//get a random course details i.e. tracks
+export const getRandomCourseDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: RANDOM_COURSE_DETAILS_REQUEST,
+    });
+    const { data } = await axios.get(
+      `https://localhost:7264/api/Cookies/random/${id}`
+    );
+    dispatch({
+      type: RANDOM_COURSE_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: RANDOM_COURSE_DETAILS_FAIL,
       payload: error.response.data.message,
     });
   }

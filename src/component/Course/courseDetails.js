@@ -12,7 +12,7 @@ import {
   updateCourse,
 } from "../../actions/courseAction";
 import { redirect, useParams } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import {

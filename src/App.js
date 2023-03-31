@@ -8,11 +8,6 @@ import WebFont from "webfontloader";
 import Appbar from "./component/layout/Appbar";
 import CourseDetails from "./component/Course/courseDetails.js";
 import LoginSignUp from "./component/User/LoginSignUp.js";
-import Profile from "./component/User/Profile.js";
-import UpdateProfile from "./component/User/UpdateProfile.js";
-import UpdatePassword from "./component/User/UpdatePassword.js";
-import ForgotPassword from "./component/User/ForgotPassword.js";
-import ResetPassword from "./component/User/ResetPassword.js";
 import UserOptions from "./component/layout/Header/UserOptions";
 import NewCourse from "./component/Course/NewCourse";
 import NewTrack from "./component/Course/NewTrack";
@@ -22,6 +17,7 @@ import store from "./store.js";
 import { loadUser } from "./actions/userAction";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import RandomCookie from "./component/Course/randomCourse";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -43,21 +39,8 @@ function App() {
         <Route path="/" element={<Appbar />}>
           <Route index element={<Home />} />
           <Route path="cookie/:id" element={<CourseDetails />} />
+          <Route path="cookie/random" element={<RandomCookie />} />
           <Route path="Login/" element={<LoginSignUp />} />
-          <Route
-            path="account/"
-            element={isAuthenticated ? <Profile /> : <LoginSignUp />}
-          />
-          <Route
-            path="me/update"
-            element={isAuthenticated ? <UpdateProfile /> : <LoginSignUp />}
-          />
-          <Route
-            path="password/update"
-            element={isAuthenticated ? <UpdatePassword /> : <LoginSignUp />}
-          />
-          <Route path="password/forgot" element={<ForgotPassword />} />
-          <Route path="password/reset/:token" element={<ResetPassword />} />
           <Route
             path="cookie/new"
             element={isAuthenticated ? <NewCourse /> : <LoginSignUp />}

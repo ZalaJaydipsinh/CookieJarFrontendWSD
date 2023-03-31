@@ -4,11 +4,8 @@ import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
 import { clearErrors, getCourse } from "../../actions/courseAction";
 import CourseCard from "../Course/courseCard";
-import { alertClasses } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 
 const Home = () => {
   const history = useNavigate();
@@ -17,9 +14,7 @@ const Home = () => {
   // const value = queryString.parse(window.location.search);
   const [keyword, setKeyword] = useState("");
 
-  const { loading, courses, error } = useSelector(
-    (state) => state.courses
-  );
+  const { loading, courses, error } = useSelector((state) => state.courses);
   // const { loading: userLoading, isAuthenticated, user } = useSelector(
   //   (state) => state.user
   // );
@@ -45,12 +40,18 @@ const Home = () => {
 
   return (
     <>
-      <MetaData title={"Course Tracker"} />
+      <MetaData title={"Cookie Jar"} />
       {loading ? (
         <h1>waiting... ... ...</h1>
       ) : (
-        courses &&
-        courses.map((course) => <CourseCard key={course.id} course={course} />)
+        <div className="card-container">
+          {courses &&
+            courses.map((course) => (
+              <div className="cookie-card">
+              <CourseCard key={course.id} course={course} />
+              </div>
+            ))}
+        </div>
       )}
     </>
   );
