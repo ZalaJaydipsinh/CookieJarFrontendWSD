@@ -111,10 +111,6 @@ const NewTrack = () => {
           }}
         >
           <CardContent>
-            <Typography gutterBottom variant="h4">
-              User Name
-            </Typography>
-
             <Typography gutterBottom variant="h6">
               Enter new Tag Name
             </Typography>

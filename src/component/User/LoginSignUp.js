@@ -74,6 +74,7 @@ const LoginSignUp = ({ location }) => {
       // console.log("User authenticated: ", logedinUser);
       history(redirect);
     }
+    
   }, [dispatch, error, alert, history, isAuthenticated, redirect]);
 
   const switchTabs = (e, tab) => {
