@@ -68,7 +68,7 @@ const LoginSignUp = ({ location }) => {
       dispatch(clearErrors());
     }
 
-    if (isAuthenticated) {
+    if (isAuthenticated && logedinUser) {
       localStorage.setItem("uid", logedinUser.id);
       localStorage.setItem("uname", logedinUser.name);
       // console.log("User authenticated: ", logedinUser);
